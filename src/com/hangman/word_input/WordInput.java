@@ -15,21 +15,22 @@ public class WordInput extends Activity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
     }
 
     // Called when the OK button is clicked
     // Checks to make sure the input is only alphabetic characters
-    public void click_ok(View view) {
+    public void clickButton(View view) {
         EditText input = (EditText)findViewById(R.id.input);
         String temp_word = input.getText().toString().toLowerCase();
         if ( !temp_word.matches("^[a-z]+$") ) {
             Toast.makeText(getApplicationContext(), "Please enter a valid word", Toast.LENGTH_SHORT).show();
         }
-        // TODO: Enforce other constraints on the input (length?)
+        // Length constraint has been enforced in the XML file.
         else {
             word = temp_word;
-            Toast.makeText(getApplicationContext(), (CharSequence)word, Toast.LENGTH_SHORT).show();
             Intent word_guess = new Intent(getApplicationContext(), com.hangman.word_input.WordGuess.class);
+            word_guess.putExtra("secret_word", word);
             startActivity(word_guess);
         }
     }
